@@ -141,4 +141,32 @@ def total():
     print(f"TOTAL ACCOUNT : {total_accounts}\n")
     admin()
     
+# THIS OPTION IS USE FOR USERS
+def user():
+    print("*-----------------------------------------------*")
+    print("|         CLICK 1 FOR CREDIT MONEY              |")
+    print("|         CLICK 2 FOR DEBIT MONEY               |")
+    print("|         CLICK 3 FOR CHECK DETAILS             |")
+    print("|         CLICK 4 FOR CHECK PAYMENT STATEMENT   |")
+    print("|         CLICK 5 FOR EXIST                     |")
+    print("*-----------------------------------------------*")
+
+    a = input("ENTER THE CORRECT OPTION : ")
+    if a == "1":
+        cre()
+    if a == "2":
+        deb()
+    if a == "3":
+        details()
+    if a == "4":
+        statement()
+    if a == "5":
+        print("*------------------------------------*")
+        print("|    WELCOME BACK TO DASHBOARD       |")
+        print("*------------------------------------*")
+        fun()
+    else:
+        print("PLEASE ENTER CORRECT OPTION")
+    user()
+    
 fun()
