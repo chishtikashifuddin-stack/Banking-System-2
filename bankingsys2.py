@@ -69,7 +69,7 @@ def cre():
     for line in lines:
         if line != "":
             record = json.loads(line)
-            if record["PHONENUMBER"] == f"+91{phone}":
+            if record["account"]["PHONENUMBER"] == f"+91{phone}":
                 print("THIS NUMBER IS ALREADY EXIST...!")
                 print("----------------------------------\n")
                 cre()
@@ -127,16 +127,18 @@ def check():
     check()
 
 def total():
-    print("*---------------------------------------*")
-    print("|THIS IS TOTAL ACCOUNT IN VERSATILE BANK|")
-    print("*---------------------------------------*")
     a = os.popen("type admin_bank_DB.txt").read()
-    a1 = a.splitlines()
+    a1 = a.split("\n")
+    total_accounts = 0
     for a2 in a1:
-        if "account" in a2:
-            print("*-------------------------------------------------------------*")
-            print(f"|           THIS IS TOTAL ACCOUNT IN VERSATILE BANK          |")
-            print("*-------------------------------------------------------------*\n")
-            print(f"TOTAL ACCOUNT : {a2.count("account")}\n")
-            admin()
+        if a2 != "":
+            g = json.loads(a2)
+            if "account" in g:
+                total_accounts += 1
+    print("*-------------------------------------------------------------*")
+    print("|           THIS IS TOTAL ACCOUNT IN VERSATILE BANK          |")
+    print("*-------------------------------------------------------------*\n")
+    print(f"TOTAL ACCOUNT : {total_accounts}\n")
+    admin()
+    
 fun()
