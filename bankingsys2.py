@@ -64,5 +64,36 @@ def admin():
     else:
         print("PLEASE CHOICE FROM OPTIONS ")
     fun()
-
+    
+def cre():
+    name = input("ENTER YOUR NAME : ")
+    phone = input("ENTER YOUR PHONENUMBER : ") 
+    r = os.popen("type admin_bank_DB.txt").read()
+    r = r.splitlines()
+    for r1 in r:
+        if phone in r1 or phone == "":
+            print("THIS NUMBER IS ALREADY EXIST...!")
+            print("----------------------------------\n")
+            fun()
+    if len(name)<=7 or name == "":
+        print("PLEASE ENTER FULL NAME\n")
+        print("-----------------------\n")
+        cre()
+        
+    if phone.isdigit():
+        a = f"+91{phone}"
+        acc = random.randint(1000000,99999999)
+        time = datetime.datetime.now()
+        msg = f"THANK YOU {name} YOURE ACCOUNT HAS BEEN CREATED SUCESSFULLY IN VERSATILE BANK THIS IS YOURE ACCOUNT NUMBER : {acc}"
+        pywhatkit.sendwhatmsg_instantly(a,msg)
+        c = f"ACC NO:{acc},NAME:{name},PHONENUMBER:{a},BALANCE:0,DATE:{time}"
+        json.dumps(c)
+        d =os.popen (f"echo {c} >> admin_bank_DB.txt")
+        print("YOUR ACCOUNT IS CREATED ! ")
+        print("------------------------------\n")
+        fun()
+    else:
+        print("PLEASE ENTER CORRECT NUMBER!\n")
+        print("-----------------------------\n")
+        cre()
 fun()
