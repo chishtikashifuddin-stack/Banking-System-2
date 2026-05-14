@@ -59,10 +59,8 @@ def admin():
     admin()
     
 def cre():
-
     name = input("ENTER YOUR NAME : ")
     phone = input("ENTER YOUR PHONENUMBER : ")
-
     r = os.popen("type admin_bank_DB.txt").read()
     lines = r.splitlines()
     
@@ -100,8 +98,33 @@ def cre():
         os.popen(f'echo {data} >> admin_bank_DB.txt')
         print("YOUR ACCOUNT IS CREATED!")
         print("------------------------------\n")
+        admin()
+        
     else:
         print("PLEASE ENTER CORRECT NUMBER!")
         print("-----------------------------\n")
         cre()
+        
+
+def check():
+    acc = input("ENTER YOUR ACCOUNT NUMBER : ")
+    if len(acc) <= 7:
+        print("PLEASE ENTER CORRECT ACCOUNT NUMBER")
+        print("-----------------------------------")
+        check()
+        
+    data = os.popen("type admin_bank_DB.txt").read()
+    data1 = data.splitlines()
+    for line in data1:
+        g = json.loads(line)
+        if int(acc) == g["ACC NO"]:
+            print(f"\nACCOUNT NUMBER OF HOLDER   : {g['ACC NO']}")
+            print(f"ACCOUNT HOLDER NAME        : {g['NAME']}")
+            print(f"ACCOUNT HOLDER PHONENUMBER : {g['PHONENUMBER']}")
+            print(f"ACCOUNT HOLDER BALANCE     : {g['BALANCE']}\n")
+            admin()
+            
+    print("ACCOUNT NOT FOUND")
+    check()
+
 fun()
