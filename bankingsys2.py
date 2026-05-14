@@ -7,6 +7,8 @@ print("*------------------------------------------*")
 print("|        WELCOME TO VERSATILE BANK         |")
 print("*------------------------------------------*\n")
 
+#this function is use for option are you admin or user
+
 def fun():
     print("*-------------------*")
     print("|     ADMIN (1)     |")
@@ -26,7 +28,7 @@ def fun():
         print("|    WELCOME USER TO VERSATILE BANK       |")
         print("| HERE ARE THE OPTION WHAT YOU WANT TO DO |")
         print("*-----------------------------------------*\n")
-        user()        
+        user()
     else:
         print("\n*---------------------------------------*")
         print("|    PLEASE CHOICE THE CORRECT OPTION   |")
@@ -53,18 +55,17 @@ def admin():
         check()
     if a == "4":
         print("------------------------------\n")
-        fun() 
+        fun()
         
     else:
         print("PLEASE CHOICE FROM OPTIONS ")
     admin()
-    
+
 def cre():
     name = input("ENTER YOUR NAME : ")
     phone = input("ENTER YOUR PHONENUMBER : ")
     r = os.popen("type admin_bank_DB.txt").read()
     lines = r.splitlines()
-    
     for line in lines:
         if line != "":
             record = json.loads(line)
@@ -82,30 +83,27 @@ def cre():
         a = f"+91{phone}"
         acc = random.randint(1000000,99999999)
         time = str(datetime.datetime.now())
-        
         msg = f"THANK YOU {name} YOUR ACCOUNT HAS BEEN CREATED SUCCESSFULLY IN VERSATILE BANK THIS IS YOUR ACCOUNT NUMBER : {acc}"
-
         pywhatkit.sendwhatmsg_instantly(a, msg)
         
-        account = {
+        acc = { "account" : {
             "ACC NO": acc,
             "NAME": name,
             "PHONENUMBER": a,
             "BALANCE": 0,
-            "DATE": time
+            "DATE": time 
+            }
         }
         
-        data = json.dumps(account)
+        data = json.dumps(acc)
         os.popen(f'echo {data} >> admin_bank_DB.txt')
         print("YOUR ACCOUNT IS CREATED!")
         print("------------------------------\n")
         admin()
-        
     else:
         print("PLEASE ENTER CORRECT NUMBER!")
         print("-----------------------------\n")
         cre()
-        
 
 def check():
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
@@ -118,14 +116,27 @@ def check():
     data1 = data.splitlines()
     for line in data1:
         g = json.loads(line)
-        if int(acc) == g["ACC NO"]:
-            print(f"\nACCOUNT NUMBER OF HOLDER   : {g['ACC NO']}")
-            print(f"ACCOUNT HOLDER NAME        : {g['NAME']}")
-            print(f"ACCOUNT HOLDER PHONENUMBER : {g['PHONENUMBER']}")
-            print(f"ACCOUNT HOLDER BALANCE     : {g['BALANCE']}\n")
+        if int(acc) == g["account"]["ACC NO"]:
+            print(f"\nACCOUNT NUMBER OF HOLDER   : {g['account']['ACC NO']}")
+            print(f"ACCOUNT HOLDER NAME        : {g['account']['NAME']}")
+            print(f"ACCOUNT HOLDER PHONENUMBER : {g['account']['PHONENUMBER']}")
+            print(f"ACCOUNT HOLDER BALANCE     : {g['account']['BALANCE']}\n")
             admin()
             
     print("ACCOUNT NOT FOUND")
     check()
 
+def total():
+    print("*---------------------------------------*")
+    print("|THIS IS TOTAL ACCOUNT IN VERSATILE BANK|")
+    print("*---------------------------------------*")
+    a = os.popen("type admin_bank_DB.txt").read()
+    a1 = a.splitlines()
+    for a2 in a1:
+        if "account" in a2:
+            print("*-------------------------------------------------------------*")
+            print(f"|           THIS IS TOTAL ACCOUNT IN VERSATILE BANK          |")
+            print("*-------------------------------------------------------------*\n")
+            print(f"TOTAL ACCOUNT : {a2.count("account")}\n")
+            admin()
 fun()
