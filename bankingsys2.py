@@ -190,8 +190,11 @@ def credit():
             print("----------------------------------------")
 
             num2 = input("CHOICE OPTION : ")
-            old = int(g["account"]["BALANCE"])
-
+            data = os.popen("type user_bank_DB.txt").read()
+            data1 = data.splitlines()
+            for line in data1:
+                h = json.loads(line)
+                old = h["account"]["BALANCE"]
             if num2 == "1":
                 amount = 100
                 new = old + amount
@@ -226,9 +229,10 @@ def credit():
             print("----------------------------------------")
             data2 = json.dumps(acc)
             os.popen(f'echo {data2} >> user_bank_DB.txt')
+            os.popen(f"echo {data2} >> admin_bank_DB.txt")
             user()
+            
             
     print("ACCOUNT NOT FOUND")
     credit()
-    
 fun()
