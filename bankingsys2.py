@@ -10,7 +10,6 @@ def fun():
     print("*-------------------*")
     print("|     ADMIN (1)     |")
     print("|     USER  (2)     |")
-    print("|     EXIST (3)     |")
     print("*-------------------*\n")    
     
     a = input("CHOICE THE OPTION : ")
@@ -26,14 +25,7 @@ def fun():
         print("|    WELCOME USER TO VERSATILE BANK       |")
         print("| HERE ARE THE OPTION WHAT YOU WANT TO DO |")
         print("*-----------------------------------------*\n")
-        user()
-
-    if a == "3":
-        print("\n*---------------------------------------------*")
-        print("|    THANK YOU VISITING TO VERSATILE BANK     |")
-        print("*---------------------------------------------*\n")
-        return
-        
+        user()        
     else:
         print("\n*---------------------------------------*")
         print("|    PLEASE CHOICE THE CORRECT OPTION   |")
@@ -60,41 +52,56 @@ def admin():
         check()
     if a == "4":
         print("------------------------------\n")
-        fun()        
+        fun() 
+        
     else:
         print("PLEASE CHOICE FROM OPTIONS ")
-    fun()
+    admin()
     
 def cre():
+
     name = input("ENTER YOUR NAME : ")
-    phone = input("ENTER YOUR PHONENUMBER : ") 
+    phone = input("ENTER YOUR PHONENUMBER : ")
+
     r = os.popen("type admin_bank_DB.txt").read()
+    lines = r.splitlines()
     
-    r = r.splitlines()
-    for r1 in r:
-        if phone in r1 or phone == "":
-            print("THIS NUMBER IS ALREADY EXIST...!")
-            print("----------------------------------\n")
-            fun()
-    if len(name)<=7 or name == "":
-        print("PLEASE ENTER FULL NAME\n")
+    for line in lines:
+        if line != "":
+            record = json.loads(line)
+            if record["PHONENUMBER"] == f"+91{phone}":
+                print("THIS NUMBER IS ALREADY EXIST...!")
+                print("----------------------------------\n")
+                cre()
+                
+    if len(name) <= 7 or name == "":
+        print("PLEASE ENTER FULL NAME")
         print("-----------------------\n")
         cre()
         
     if phone.isdigit():
         a = f"+91{phone}"
         acc = random.randint(1000000,99999999)
-        time = datetime.datetime.now()
-        msg = f"THANK YOU {name} YOURE ACCOUNT HAS BEEN CREATED SUCESSFULLY IN VERSATILE BANK THIS IS YOURE ACCOUNT NUMBER : {acc}"
-        pywhatkit.sendwhatmsg_instantly(a,msg)
-        c = f"ACC NO:{acc},NAME:{name},PHONENUMBER:{a},BALANCE:0,DATE:{time}"
-        json.dumps(c)
-        d =os.popen (f"echo {c} >> admin_bank_DB.txt")
-        print("YOUR ACCOUNT IS CREATED ! ")
+        time = str(datetime.datetime.now())
+        
+        msg = f"THANK YOU {name} YOUR ACCOUNT HAS BEEN CREATED SUCCESSFULLY IN VERSATILE BANK THIS IS YOUR ACCOUNT NUMBER : {acc}"
+
+        pywhatkit.sendwhatmsg_instantly(a, msg)
+        
+        account = {
+            "ACC NO": acc,
+            "NAME": name,
+            "PHONENUMBER": a,
+            "BALANCE": 0,
+            "DATE": time
+        }
+        
+        data = json.dumps(account)
+        os.popen(f'echo {data} >> admin_bank_DB.txt')
+        print("YOUR ACCOUNT IS CREATED!")
         print("------------------------------\n")
-        fun()
     else:
-        print("PLEASE ENTER CORRECT NUMBER!\n")
+        print("PLEASE ENTER CORRECT NUMBER!")
         print("-----------------------------\n")
         cre()
 fun()
