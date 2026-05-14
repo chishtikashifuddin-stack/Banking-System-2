@@ -169,4 +169,66 @@ def user():
         print("PLEASE ENTER CORRECT OPTION")
     user()
     
+# this function is use to credit account with using user account number to verify the user account then it will give 5 options to creadit amount.    
+def credit():
+    num = input("ENTER YOUR ACCOUNT NUMBER : ")
+    data = os.popen("type admin_bank_DB.txt").read()
+    data1 = data.splitlines()
+    for line in data1:
+        g = json.loads(line)
+        if num == str(g["account"]["ACC NO"]):
+            print("\n*------------------------------------*")
+            print(f"{g["account"]["NAME"]} THIS USER FOUND")
+            print("*------------------------------------*\n")
+
+            print("----------------------------------------")
+            print("|          CLICK 1 TO ADD 100₹         |")
+            print("|          CLICK 2 TO ADD 200₹         |")
+            print("|          CLICK 3 TO ADD 300₹         |")
+            print("|          CLICK 4 TO ADD 500₹         |")
+            print("|          CLICK 5 TO ADD 1000₹        |")
+            print("----------------------------------------")
+
+            num2 = input("CHOICE OPTION : ")
+            old = int(g["account"]["BALANCE"])
+
+            if num2 == "1":
+                amount = 100
+                new = old + amount
+            if num2 == "2":
+                amount = 200
+                new = old + amount
+            if num2 == "3":
+                amount = 300
+                new = old + amount
+            if num2 == "4":
+                amount = 500
+                new = old + amount
+            if num2 == "5":
+                amount = 1000            
+                new = old + amount
+                
+            time = datetime.datetime.now()
+            acc = {
+                "account": {
+                    "ACC NO": g["account"]["ACC NO"],
+                    "NAME": g["account"]["NAME"],
+                    "PHONENUMBER": g["account"]["PHONENUMBER"],
+                    "BALANCE": new,
+                    "DATE": str(time)
+                }
+            }
+
+            print("----------------------------------------")
+            print(f"HEY {g['account']['NAME']}")
+            print(f"{amount}₹ CREDITED SUCCESSFULLY")
+            print(f"NEW BALANCE : {new}₹")
+            print("----------------------------------------")
+            data2 = json.dumps(acc)
+            os.popen(f'echo {data2} >> user_bank_DB.txt')
+            user()
+            
+    print("ACCOUNT NOT FOUND")
+    credit()
+    
 fun()
