@@ -69,6 +69,7 @@ def cre():
     name = input("ENTER YOUR NAME : ")
     phone = input("ENTER YOUR PHONENUMBER : ") 
     r = os.popen("type admin_bank_DB.txt").read()
+    
     r = r.splitlines()
     for r1 in r:
         if phone in r1 or phone == "":
