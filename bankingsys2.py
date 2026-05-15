@@ -123,9 +123,9 @@ def check():
     print(f"ACCOUNT HOLDER PHONENUMBER : {g['account']['PHONENUMBER']}")
     print(f"ACCOUNT HOLDER BALANCE     : {g['account']['BALANCE']}\n")
     admin()
-            
-    print("ACCOUNT NOT FOUND")
-    check()
+    else:
+        print("ACCOUNT NOT FOUND")
+        check()
 
 def total():
     a = os.popen("type admin_bank_DB.txt").read()
