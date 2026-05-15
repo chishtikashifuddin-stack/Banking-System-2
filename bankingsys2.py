@@ -7,7 +7,6 @@ print("*------------------------------------------*")
 print("|        WELCOME TO VERSATILE BANK         |")
 print("*------------------------------------------*\n")
 
-#this function is use for option are you admin or user
 
 def fun():
     print("*-------------------*")
@@ -18,8 +17,8 @@ def fun():
     a = input("CHOICE THE OPTION : ")
     if a == "1":
         print("\n*-----------------------------------------*")
-        print("|    WELCOME ADMIN TO VERSATILE BANK      |")
-        print("| HERE ARE THE OPTION WHAT YOU WANT TO DO |")
+        print("|        WELCOME TO VERSATILE BANK         |")
+        print("| HERE ARE THE OPTION WHAT YOU WANT TO DO  |")
         print("*-----------------------------------------*\n")
         admin()
 
@@ -36,6 +35,7 @@ def fun():
     fun()
     
 
+#this function is use for option are you admin or user
 def admin():
     print("*---------------------------------------------------*")
     print("|         CLICK 1 FOR CREATE A ACCOUNT              |")
@@ -50,13 +50,15 @@ def admin():
         print("------------------------------\n")
         check()
     if a == "3":
-        print("------------------------------\n")
+        print("*------------------------------------*")
+        print("|    WELCOME BACK TO DASHBOARD       |")
+        print("*------------------------------------*")
         fun()
         
     else:
         print("PLEASE CHOICE FROM OPTIONS ")
     admin()
-
+    
 def cre():
     name = input("ENTER YOUR NAME : ")
     phone = input("ENTER YOUR PHONENUMBER : ")
@@ -67,15 +69,20 @@ def cre():
             record = json.loads(line)
             if record["account"]["PHONENUMBER"] == f"+91{phone}":
                 print("THIS NUMBER IS ALREADY EXIST...!")
-                print("----------------------------------\n")
+                print("--------------------------------\n")
                 cre()
                 
     if len(name) <= 7 or name == "":
         print("PLEASE ENTER FULL NAME")
         print("-----------------------\n")
         cre()
+    if name.isdigit():
+        print("---------------------------------------------------")
+        print("|PLEASE ENTER ALPHABET IN NAME DIGIT IS NOT ALLOW |")
+        print("---------------------------------------------------\n")
+        cre()
         
-    if phone.isdigit():
+    if phone.isdigit() and len(phone) == 10:
         a = f"+91{phone}"
         acc = random.randint(1000000,99999999)
         time = str(datetime.datetime.now())
@@ -101,57 +108,58 @@ def cre():
         print("-----------------------------\n")
         cre()
 
+
 def check():
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
     if len(acc) <= 7:
         print("PLEASE ENTER CORRECT ACCOUNT NUMBER")
         print("-----------------------------------")
         check()
-    
+        
     data = os.popen("type admin_bank_DB.txt").read()
     data1 = data.splitlines()
     for line in data1:
         g = json.loads(line)
         if int(acc) == g["account"]["ACC NO"]:
             os.popen("type admin_bank_DB.txt").read()
+            print("---------------------------------------------------------")
             print(f"\nACCOUNT NUMBER OF HOLDER   : {g['account']['ACC NO']}")
             print(f"ACCOUNT HOLDER NAME        : {g['account']['NAME']}")
             print(f"ACCOUNT HOLDER PHONENUMBER : {g['account']['PHONENUMBER']}")
             print(f"ACCOUNT HOLDER BALANCE     : {g['account']['BALANCE']}")
             print(f"TIME OF TRANSACTIONS : {g['account']['DATE']}\n")
+            print("---------------------------------------------------------")
     admin()
-
+    
     print("ACCOUNT NOT FOUND")
     check()
-    
     
 # THIS OPTION IS USE FOR USERS
 def user():
     print("*-----------------------------------------------*")
     print("|         CLICK 1 FOR CREDIT MONEY              |")
     print("|         CLICK 2 FOR DEBIT MONEY               |")
-    print("|         CLICK 3 FOR CHECK DETAILS             |")
-    print("|         CLICK 4 FOR CHECK PAYMENT STATEMENT   |")
-    print("|         CLICK 5 FOR EXIST                     |")
+    print("|         CLICK 3 FOR CHECK PAYMENT STATEMENT   |")
+    print("|         CLICK 4 FOR EXIST                     |")
     print("*-----------------------------------------------*")
 
     a = input("ENTER THE CORRECT OPTION : ")
     if a == "1":
-        cre()
         print("*------------------------------------*")
         print(" |    WELCOME TO CREDIT OPTION        |")
         print("*-------------------------------------*")
+        credit()
     if a == "2":
-        deb()
         print("*------------------------------------*")
         print(" |    WELCOME TO DEBIT OPTION         |")
         print("*-------------------------------------*")
- 
+        deb()
     if a == "3":
-        details()
+        print("*-----------------------------------------------------*")
+        print(" |    CHECK YOURE BANK STATEMENT WITH ACCOUNT NUMBER  |")
+        print("*-----------------------------------------------------*")
+        detials()
     if a == "4":
-        statement()
-    if a == "5":
         print("*------------------------------------*")
         print("|    WELCOME BACK TO DASHBOARD       |")
         print("*------------------------------------*")
@@ -159,8 +167,8 @@ def user():
     else:
         print("PLEASE ENTER CORRECT OPTION")
     user()
-    
-# this function is use to credit account with using user account number to verify the user account then it will give 5 options to creadit amount.    
+
+# this function is use to credit account with using user account number to verify the user account then it will give 5 options to creadit amount.
 def credit():
     num = input("ENTER YOUR ACCOUNT NUMBER : ")
     data = os.popen("type admin_bank_DB.txt").read()
@@ -171,40 +179,42 @@ def credit():
             print("\n*------------------------------------*")
             print(f"{g["account"]["NAME"]} THIS USER FOUND")
             print("*------------------------------------*\n")
-
             num2 = input(f"ENTER HOW MUCH MONEY YOU WANT CREDIT {g["account"]["NAME"]} : ")
-            data = os.popen("type admin_bank_DB.txt").read()
-            data1 = data.splitlines()
-            for line in data1:
-                g = json.loads(line)
-                if num == str(g["account"]["ACC NO"]):
+            
+            if num2.isdigit(): 
+                data = os.popen("type admin_bank_DB.txt").read()
+                data1 = data.splitlines()
+                for line in data1:
                     g = json.loads(line)
-                    total = int(g["account"]["BALANCE"]) + int(num2)                
-                    time = datetime.datetime.now()
-                    acc = {
-                        "account": {
-                            "ACC NO": g["account"]["ACC NO"],
-                            "NAME": g["account"]["NAME"],
-                            "PHONENUMBER": g["account"]["PHONENUMBER"],
-                            "BALANCE": total,
-                            "DATE": str(time)
+                    if num == str(g["account"]["ACC NO"]):
+                        total = int(g["account"]["BALANCE"]) + int(num2)                
+                        time = datetime.datetime.now()
+                        acc = {
+                            "account": {
+                                "ACC NO": g["account"]["ACC NO"],
+                                "NAME": g["account"]["NAME"],
+                                "PHONENUMBER": g["account"]["PHONENUMBER"],
+                                "BALANCE": total,
+                                "DATE": str(time)
+                            }
                         }
-                    }
 
-            print("----------------------------------------")
-            print(f"HEY {g['account']['NAME']}")
-            print(f"{num2}₹ CREDITED SUCCESSFULLY")
-            print(f"NEW BALANCE : {total}₹")
-            print("----------------------------------------")
-            data2 = json.dumps(acc)
-            os.popen(f'echo {data2} >> user_bank_DB.txt')
-            os.popen(f"echo {data2} >> admin_bank_DB.txt")
-            user()
+                print("----------------------------------------")
+                print(f"HEY {g['account']['NAME']}")
+                print(f"{num2}₹ CREDITED SUCCESSFULLY")
+                print(f"NEW BALANCE : {total}₹")
+                print("----------------------------------------")
+                data2 = json.dumps(acc)
+                os.popen(f'echo {data2} >> user_bank_DB.txt')
+                os.popen(f"echo {data2} >> admin_bank_DB.txt")
+                user()
 
-
+            print("PLEASE ENTER CORRECT NUMBER\n")
+            credit()
+            
     print("ACCOUNT NOT FOUND")
     credit()
-    
+
 # this function is use to debit account with using user account number to verify the user account then it will give 5 options to debit amount.
 def deb():
     num = input("ENTER YOUR ACCOUNT NUMBER : ")
@@ -217,58 +227,66 @@ def deb():
             print(f"{g["account"]["NAME"]} THIS USER FOUND")
             print("*------------------------------------*\n")
 
-            num2 = input(f"ENTER HOW MUCH MONEY YOU WANT CREDIT {g["account"]["NAME"]} : ")
-            data = os.popen("type admin_bank_DB.txt").read()
-            data1 = data.splitlines()
-            for line in data1:
-                g = json.loads(line)
-                if num == str(g["account"]["ACC NO"]):
+            num2 = input(f"ENTER HOW MUCH MONEY YOU WANT DEBIT {g["account"]["NAME"]} : ")
+            if num2 > str(g["account"]["BALANCE"]):
+                print("\n-------------------------------------------------------------------")
+                print("YOURE ACCOUNT DONT HAVE HAS MUCH MONEY PLEASE CHECK YOURE BALANCE !")
+                print("-------------------------------------------------------------------\n")
+                user()
+            if num2.isdigit():
+                data = os.popen("type admin_bank_DB.txt").read()
+                data1 = data.splitlines()
+                for line in data1:
                     g = json.loads(line)
-                    total = int(g["account"]["BALANCE"]) - int(num2)                
-                    time = datetime.datetime.now()
-                    acc = {
-                        "account": {
-                            "ACC NO": g["account"]["ACC NO"],
-                            "NAME": g["account"]["NAME"],
-                            "PHONENUMBER": g["account"]["PHONENUMBER"],
-                            "BALANCE": total,
-                            "DATE": str(time)
+                    if num == str(g["account"]["ACC NO"]):
+                        g = json.loads(line)
+                        total = int(g["account"]["BALANCE"]) - int(num2)                
+                        time = datetime.datetime.now()
+                        acc = {
+                            "account": {
+                                "ACC NO": g["account"]["ACC NO"],
+                                "NAME": g["account"]["NAME"],
+                                "PHONENUMBER": g["account"]["PHONENUMBER"],
+                                "BALANCE": total,
+                                "DATE": str(time)
+                            }
                         }
-                    }
 
-            print("----------------------------------------")
-            print(f"HEY {g['account']['NAME']}")
-            print(f"{num2}₹ CREDITED SUCCESSFULLY")
-            print(f"NEW BALANCE : {total}₹")
-            print("----------------------------------------")
-            data2 = json.dumps(acc)
-            os.popen(f'echo {data2} >> user_bank_DB.txt')
-            os.popen(f"echo {data2} >> admin_bank_DB.txt")
-            user()
+                print("----------------------------------------")
+                print(f"HEY {g['account']['NAME']}")
+                print(f"{num2}₹ CREDITED SUCCESSFULLY")
+                print(f"NEW BALANCE : {total}₹")
+                print("----------------------------------------")
+                data2 = json.dumps(acc)
+                os.popen(f'echo {data2} >> user_bank_DB.txt')
+                os.popen(f"echo {data2} >> admin_bank_DB.txt")
+                user()
+                
+            print("PLEASE ENTER CORRECT DIGIT")
+            deb()
     print("ACCOUNT NOT FOUND")
     deb()
     
-def detials():
+
+def detials():    
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
+    data = os.popen("type admin_bank_DB.txt").read()
+    data1 = data.splitlines()
     if len(acc) <= 7:
         print("PLEASE ENTER CORRECT ACCOUNT NUMBER")
         print("-----------------------------------")
         detials()
-    
-    data = os.popen("type admin_bank_DB.txt").read()
-    data1 = data.splitlines()
     for line in data1:
         g = json.loads(line)
         if int(acc) == g["account"]["ACC NO"]:
             os.popen("type admin_bank_DB.txt").read()
-            print(f"\nACCOUNT NUMBER OF HOLDER   : {g['account']['ACC NO']}")
-            print(f"ACCOUNT HOLDER NAME        : {g['account']['NAME']}")
-            print(f"ACCOUNT HOLDER PHONENUMBER : {g['account']['PHONENUMBER']}")
-            print(f"ACCOUNT HOLDER BALANCE     : {g['account']['BALANCE']}")
+            print(f"\nACCOUNT HOLDER BALANCE    : {g['account']['BALANCE']}")
             print(f"TIME OF TRANSACTIONS : {g['account']['DATE']}\n")
+    print("\n*-------------------------------------------------*")
+    print(f"|THIS IS YOURE BAN HISTORY {g['account']['NAME']}|")
+    print("*-------------------------------------------------*\n")
     user()
-
+    
     print("ACCOUNT NOT FOUND")
     detials()
-    
 fun()
