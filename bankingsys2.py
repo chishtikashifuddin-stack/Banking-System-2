@@ -109,30 +109,48 @@ def cre():
         cre()
 
 
-def check():
+def check():    
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
+
     if len(acc) <= 7:
         print("PLEASE ENTER CORRECT ACCOUNT NUMBER")
         print("-----------------------------------")
-        check()
-        
+        detials()
+
     data = os.popen("type admin_bank_DB.txt").read()
     data1 = data.splitlines()
-    for line in data1:
-        g = json.loads(line)
-        if int(acc) == g["account"]["ACC NO"]:
-            os.popen("type admin_bank_DB.txt").read()
-            print("---------------------------------------------------------")
-            print(f"\nACCOUNT NUMBER OF HOLDER   : {g['account']['ACC NO']}")
-            print(f"ACCOUNT HOLDER NAME        : {g['account']['NAME']}")
-            print(f"ACCOUNT HOLDER PHONENUMBER : {g['account']['PHONENUMBER']}")
-            print(f"ACCOUNT HOLDER BALANCE     : {g['account']['BALANCE']}")
-            print(f"TIME OF TRANSACTIONS : {g['account']['DATE']}\n")
-            print("---------------------------------------------------------")
-    admin()
+
+    latest_acc = ""
+    latest_name = ""
+    latest_phone = ""
+    latest_balance = ""
+    latest_date = ""
     
+    for line in data1:
+        if line != "":
+            g = json.loads(line)
+            if int(acc) == g["account"]["ACC NO"]:
+                latest_acc = g["account"]["ACC NO"]
+                latest_name = g["account"]["NAME"]
+                latest_phone = g["account"]["PHONENUMBER"]
+                latest_balance = g["account"]["BALANCE"]
+                latest_date = g["account"]["DATE"]
+
+    if latest_acc != "":
+        print("\n*-------------------------------------------------*")
+        print(f"| THIS IS YOUR BANK DETAILS {latest_name} |")
+        print("*-------------------------------------------------*\n")
+        print(f"ACCOUNT NUMBER      : {latest_acc}")
+        print(f"ACCOUNT HOLDER NAME : {latest_name}")
+        print(f"PHONE NUMBER        : {latest_phone}")
+        print(f"UPDATED BALANCE     : {latest_balance}₹")
+        print(f"LAST TRANSACTION    : {latest_date}")
+        print("---------------------------------------------------\n")
+
+        admin()
+
     print("ACCOUNT NOT FOUND")
-    check()
+    check() 
     
 # THIS OPTION IS USE FOR USERS
 def user():
@@ -220,7 +238,6 @@ def credit():
             
     print("ACCOUNT NOT FOUND")
     credit()
-
 # this function is use to debit account with using user account number to verify the user account then it will give 5 options to debit amount.
 def deb():
     num = input("ENTER YOUR ACCOUNT NUMBER : ")
@@ -239,7 +256,8 @@ def deb():
                 print("YOURE ACCOUNT DONT HAVE HAS MUCH MONEY PLEASE CHECK YOURE BALANCE !")
                 print("-------------------------------------------------------------------\n")
                 user()
-            if num2.isdigit():
+                
+            if num2 < str(g["account"]["BALANCE"]):
                 data = os.popen("type admin_bank_DB.txt").read()
                 data1 = data.splitlines()
                 for line in data1:
