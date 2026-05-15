@@ -216,5 +216,49 @@ def credit():
 
     print("ACCOUNT NOT FOUND")
     credit()
+    
+# this function is use to debit account with using user account number to verify the user account then it will give 5 options to debit amount.
+def deb():
+    num = input("ENTER YOUR ACCOUNT NUMBER : ")
+    data = os.popen("type admin_bank_DB.txt").read()
+    data1 = data.splitlines()
+    for line in data1:
+        g = json.loads(line)
+        if num == str(g["account"]["ACC NO"]):
+            print("\n*------------------------------------*")
+            print(f"{g["account"]["NAME"]} THIS USER FOUND")
+            print("*------------------------------------*\n")
 
+            num2 = input(f"ENTER HOW MUCH MONEY YOU WANT CREDIT {g["account"]["NAME"]} : ")
+            data = os.popen("type admin_bank_DB.txt").read()
+            data1 = data.splitlines()
+            for line in data1:
+                g = json.loads(line)
+                if num == str(g["account"]["ACC NO"]):
+                    g = json.loads(line)
+                    total = int(g["account"]["BALANCE"]) - int(num2)                
+                    time = datetime.datetime.now()
+                    acc = {
+                        "account": {
+                            "ACC NO": g["account"]["ACC NO"],
+                            "NAME": g["account"]["NAME"],
+                            "PHONENUMBER": g["account"]["PHONENUMBER"],
+                            "BALANCE": total,
+                            "DATE": str(time)
+                        }
+                    }
+
+            print("----------------------------------------")
+            print(f"HEY {g['account']['NAME']}")
+            print(f"{num2}₹ CREDITED SUCCESSFULLY")
+            print(f"NEW BALANCE : {total}₹")
+            print("----------------------------------------")
+            data2 = json.dumps(acc)
+            os.popen(f'echo {data2} >> user_bank_DB.txt')
+            os.popen(f"echo {data2} >> admin_bank_DB.txt")
+            user()
+
+
+    print("ACCOUNT NOT FOUND")
+    deb()
 fun()
