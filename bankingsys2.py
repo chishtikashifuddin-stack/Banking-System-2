@@ -100,7 +100,6 @@ def cre():
         print("PLEASE ENTER CORRECT NUMBER!")
         print("-----------------------------\n")
         cre()
-        
 
 def check():
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
@@ -248,5 +247,28 @@ def deb():
             user()
     print("ACCOUNT NOT FOUND")
     deb()
+    
+def detials():
+    acc = input("ENTER YOUR ACCOUNT NUMBER : ")
+    if len(acc) <= 7:
+        print("PLEASE ENTER CORRECT ACCOUNT NUMBER")
+        print("-----------------------------------")
+        detials()
+    
+    data = os.popen("type admin_bank_DB.txt").read()
+    data1 = data.splitlines()
+    for line in data1:
+        g = json.loads(line)
+        if int(acc) == g["account"]["ACC NO"]:
+            os.popen("type admin_bank_DB.txt").read()
+            print(f"\nACCOUNT NUMBER OF HOLDER   : {g['account']['ACC NO']}")
+            print(f"ACCOUNT HOLDER NAME        : {g['account']['NAME']}")
+            print(f"ACCOUNT HOLDER PHONENUMBER : {g['account']['PHONENUMBER']}")
+            print(f"ACCOUNT HOLDER BALANCE     : {g['account']['BALANCE']}")
+            print(f"TIME OF TRANSACTIONS : {g['account']['DATE']}\n")
+    user()
+
+    print("ACCOUNT NOT FOUND")
+    detials()
     
 fun()
