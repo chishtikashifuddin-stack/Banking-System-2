@@ -184,58 +184,37 @@ def credit():
             print(f"{g["account"]["NAME"]} THIS USER FOUND")
             print("*------------------------------------*\n")
 
-            print("----------------------------------------")
-            print("|          CLICK 1 TO ADD 100₹         |")
-            print("|          CLICK 2 TO ADD 200₹         |")
-            print("|          CLICK 3 TO ADD 300₹         |")
-            print("|          CLICK 4 TO ADD 500₹         |")
-            print("|          CLICK 5 TO ADD 1000₹        |")
-            print("----------------------------------------")
-
-            num2 = input("CHOICE OPTION : ")
-            data = os.popen("type user_bank_DB.txt").read()
+            num2 = input(f"ENTER HOW MUCH MONEY YOU WANT CREDIT {g["account"]["NAME"]} : ")
+            data = os.popen("type admin_bank_DB.txt").read()
             data1 = data.splitlines()
             for line in data1:
-                h = json.loads(line)
-                old = h["account"]["BALANCE"]
-            if num2 == "1":
-                amount = 100
-                new = old + amount
-            if num2 == "2":
-                amount = 200
-                new = old + amount
-            if num2 == "3":
-                amount = 300
-                new = old + amount
-            if num2 == "4":
-                amount = 500
-                new = old + amount
-            if num2 == "5":
-                amount = 1000            
-                new = old + amount
-                
-            time = datetime.datetime.now()
-            acc = {
-                "account": {
-                    "ACC NO": g["account"]["ACC NO"],
-                    "NAME": g["account"]["NAME"],
-                    "PHONENUMBER": g["account"]["PHONENUMBER"],
-                    "BALANCE": new,
-                    "DATE": str(time)
-                }
-            }
+                g = json.loads(line)
+                if num == str(g["account"]["ACC NO"]):
+                    g = json.loads(line)
+                    total = int(g["account"]["BALANCE"]) + int(num2)                
+                    time = datetime.datetime.now()
+                    acc = {
+                        "account": {
+                            "ACC NO": g["account"]["ACC NO"],
+                            "NAME": g["account"]["NAME"],
+                            "PHONENUMBER": g["account"]["PHONENUMBER"],
+                            "BALANCE": total,
+                            "DATE": str(time)
+                        }
+                    }
 
             print("----------------------------------------")
             print(f"HEY {g['account']['NAME']}")
-            print(f"{amount}₹ CREDITED SUCCESSFULLY")
-            print(f"NEW BALANCE : {new}₹")
+            print(f"{num2}₹ CREDITED SUCCESSFULLY")
+            print(f"NEW BALANCE : {total}₹")
             print("----------------------------------------")
             data2 = json.dumps(acc)
             os.popen(f'echo {data2} >> user_bank_DB.txt')
             os.popen(f"echo {data2} >> admin_bank_DB.txt")
             user()
-            
-            
+
+
     print("ACCOUNT NOT FOUND")
     credit()
+
 fun()
