@@ -117,11 +117,12 @@ def check():
     for line in data1:
         g = json.loads(line)
         if int(acc) == g["account"]["ACC NO"]:
-            print(f"\nACCOUNT NUMBER OF HOLDER   : {g['account']['ACC NO']}")
-            print(f"ACCOUNT HOLDER NAME        : {g['account']['NAME']}")
-            print(f"ACCOUNT HOLDER PHONENUMBER : {g['account']['PHONENUMBER']}")
-            print(f"ACCOUNT HOLDER BALANCE     : {g['account']['BALANCE']}\n")
-            admin()
+            g = json.loads(line)
+    print(f"\nACCOUNT NUMBER OF HOLDER   : {g['account']['ACC NO']}")
+    print(f"ACCOUNT HOLDER NAME        : {g['account']['NAME']}")
+    print(f"ACCOUNT HOLDER PHONENUMBER : {g['account']['PHONENUMBER']}")
+    print(f"ACCOUNT HOLDER BALANCE     : {g['account']['BALANCE']}\n")
+    admin()
             
     print("ACCOUNT NOT FOUND")
     check()
