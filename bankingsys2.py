@@ -39,9 +39,8 @@ def fun():
 def admin():
     print("*---------------------------------------------------*")
     print("|         CLICK 1 FOR CREATE A ACCOUNT              |")
-    print("|         CLICK 2 FOR CHECK TOTAL ACCOUNT DETAILS   |")
-    print("|         CLICK 3 FOR CHECK ACCOUNT DETAILS         |")
-    print("|         CLICK 4 FOR EXIST                         |")
+    print("|         CLICK 2 FOR CHECK ACCOUNT DETAILS         |")
+    print("|         CLICK 3 FOR EXIST                         |")
     print("*---------------------------------------------------*")
     a = input("CHOICE OPTIONS :- ")
     if a == "1":
@@ -49,11 +48,8 @@ def admin():
         cre()
     if a == "2":
         print("------------------------------\n")
-        total()
-    if a == "3":
-        print("------------------------------\n")
         check()
-    if a == "4":
+    if a == "3":
         print("------------------------------\n")
         fun()
         
@@ -104,6 +100,7 @@ def cre():
         print("PLEASE ENTER CORRECT NUMBER!")
         print("-----------------------------\n")
         cre()
+        
 
 def check():
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
@@ -128,6 +125,7 @@ def check():
     print("ACCOUNT NOT FOUND")
     check()
     
+    
 # THIS OPTION IS USE FOR USERS
 def user():
     print("*-----------------------------------------------*")
@@ -141,8 +139,15 @@ def user():
     a = input("ENTER THE CORRECT OPTION : ")
     if a == "1":
         cre()
+        print("*------------------------------------*")
+        print(" |    WELCOME TO CREDIT OPTION        |")
+        print("*-------------------------------------*")
     if a == "2":
         deb()
+        print("*------------------------------------*")
+        print(" |    WELCOME TO DEBIT OPTION         |")
+        print("*-------------------------------------*")
+ 
     if a == "3":
         details()
     if a == "4":
@@ -241,8 +246,7 @@ def deb():
             os.popen(f'echo {data2} >> user_bank_DB.txt')
             os.popen(f"echo {data2} >> admin_bank_DB.txt")
             user()
-
-
     print("ACCOUNT NOT FOUND")
     deb()
+    
 fun()
