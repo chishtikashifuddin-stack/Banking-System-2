@@ -242,54 +242,47 @@ def credit():
 def deb():
     num = input("ENTER YOUR ACCOUNT NUMBER : ")
     data = os.popen("type admin_bank_DB.txt").read()
-    data1 = data.splitlines()
-    for line in data1:
+    lines = data.splitlines()
+    
+    for line in reversed(lines):
         g = json.loads(line)
         if num == str(g["account"]["ACC NO"]):
             print("\n*------------------------------------*")
-            print(f"{g["account"]["NAME"]} THIS USER FOUND")
+            print(f"{g['account']['NAME']} THIS USER FOUND")
             print("*------------------------------------*\n")
-
-            num2 = input(f"ENTER HOW MUCH MONEY YOU WANT DEBIT {g["account"]["NAME"]} : ")
-            if num2 > str(g["account"]["BALANCE"]):
-                print("\n-------------------------------------------------------------------")
-                print("YOURE ACCOUNT DONT HAVE HAS MUCH MONEY PLEASE CHECK YOURE BALANCE !")
-                print("-------------------------------------------------------------------\n")
+            
+            amount = int(input(f"ENTER HOW MUCH MONEY YOU WANT DEBIT {g['account']['NAME']} : "))
+            balance = int(g["account"]["BALANCE"])
+            
+            if amount > balance:
+                print("\n----------------------------------------")
+                print("NOT ENOUGH BALANCE IN YOUR ACCOUNT")
+                print("----------------------------------------\n")
                 user()
-                
-            if num2 < str(g["account"]["BALANCE"]):
-                data = os.popen("type admin_bank_DB.txt").read()
-                data1 = data.splitlines()
-                for line in data1:
-                    g = json.loads(line)
-                    if num == str(g["account"]["ACC NO"]):
-                        g = json.loads(line)
-                        total = int(g["account"]["BALANCE"]) - int(num2)                
-                        time = datetime.datetime.now()
-                        acc = {
-                            "account": {
-                                "ACC NO": g["account"]["ACC NO"],
-                                "NAME": g["account"]["NAME"],
-                                "PHONENUMBER": g["account"]["PHONENUMBER"],
-                                "BALANCE": total,
-                                "DATE": str(time)
-                            }
-                        }
 
-                print("----------------------------------------")
-                print(f"HEY {g['account']['NAME']}")
-                print(f"{num2}₹ CREDITED SUCCESSFULLY")
-                print(f"NEW BALANCE : {total}₹")
-                print("----------------------------------------")
-                data2 = json.dumps(acc)
-                os.popen(f'echo {data2} >> user_bank_DB.txt')
-                os.popen(f"echo {data2} >> admin_bank_DB.txt")
-                user()
-                
-            print("PLEASE ENTER CORRECT DIGIT")
-            deb()
-    print("ACCOUNT NOT FOUND")
-    deb()
+            total = balance - amount
+            time = datetime.datetime.now()
+            acc = {
+                "account": {
+                    "ACC NO": g["account"]["ACC NO"],
+                    "NAME": g["account"]["NAME"],
+                    "PHONENUMBER": g["account"]["PHONENUMBER"],
+                    "BALANCE": total,
+                    "DATE": str(time)
+                }
+            }
+
+            print("----------------------------------------")
+            print(f"HEY {g['account']['NAME']}")
+            print(f"{amount}₹ DEBITED SUCCESSFULLY")
+            print(f"NEW BALANCE : {total}₹")
+            print("----------------------------------------")
+    data2 = json.dumps(acc)
+    os.popen(f'echo {data3} >> admin_bank_DB.txt')
+    os.popen(f'echo {data3} >> user_bank_DB.txt')
+    user()
+
+    print("\nACCOUNT NOT FOUND\n")
     
 def statements():    
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
@@ -352,7 +345,7 @@ def details():
         print("---------------------------------------------------\n")
 
         user()
-
+        
     print("ACCOUNT NOT FOUND")
     details()
     
