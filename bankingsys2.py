@@ -139,8 +139,9 @@ def user():
     print("*-----------------------------------------------*")
     print("|         CLICK 1 FOR CREDIT MONEY              |")
     print("|         CLICK 2 FOR DEBIT MONEY               |")
-    print("|         CLICK 3 FOR CHECK PAYMENT STATEMENT   |")
-    print("|         CLICK 4 FOR EXIST                     |")
+    print("|         CLICK 3 FOR CHECK BANK DETAILS        |")
+    print("|         CLICK 4 FOR CHECK PAYMENT STATEMENT   |")
+    print("|         CLICK 5 FOR EXIST                     |")
     print("*-----------------------------------------------*")
 
     a = input("ENTER THE CORRECT OPTION : ")
@@ -156,13 +157,18 @@ def user():
         deb()
     if a == "3":
         print("*-----------------------------------------------------*")
-        print(" |    CHECK YOURE BANK STATEMENT WITH ACCOUNT NUMBER  |")
+        print(" |    CHECK YOURE BANK DETAILS WITH ACCOUNT NUMBER    |")
         print("*-----------------------------------------------------*")
         detials()
     if a == "4":
-        print("*------------------------------------*")
-        print("|    WELCOME BACK TO DASHBOARD       |")
-        print("*------------------------------------*")
+        print("*-----------------------------------------------------------------*")
+        print("|    CHECK YOURE BANK PAYMENT STATEMENT WITH ACCOUNT NUMBER       |")
+        print("*-----------------------------------------------------------------*")
+        statements()
+    if a == "5":
+        print("-----------------------------------------------")
+        print("|         WELCOME BACK TO DASHBOARD           |")
+        print("-----------------------------------------------")
         fun()
     else:
         print("PLEASE ENTER CORRECT OPTION")
@@ -267,6 +273,27 @@ def deb():
     print("ACCOUNT NOT FOUND")
     deb()
     
+def statements():    
+    acc = input("ENTER YOUR ACCOUNT NUMBER : ")
+    data = os.popen("type admin_bank_DB.txt").read()
+    data1 = data.splitlines()
+    if len(acc) <= 7:
+        print("PLEASE ENTER CORRECT ACCOUNT NUMBER")
+        print("-----------------------------------")
+        detials()
+    for line in data1:
+        g = json.loads(line)
+        if int(acc) == g["account"]["ACC NO"]:
+            os.popen("type admin_bank_DB.txt").read()
+            print(f"\nACCOUNT HOLDER BALANCE    : {g['account']['BALANCE']}")
+            print(f"TIME OF TRANSACTIONS : {g['account']['DATE']}\n")
+    print("\n*-------------------------------------------------*")
+    print(f"|THIS IS YOURE BAN HISTORY {g['account']['NAME']}|")
+    print("*-------------------------------------------------*\n")
+    user()
+    
+    print("ACCOUNT NOT FOUND")
+    statements()
 
 def details():    
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
