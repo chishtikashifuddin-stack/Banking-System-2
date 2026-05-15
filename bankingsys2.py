@@ -268,24 +268,48 @@ def deb():
     deb()
     
 
-def detials():    
+def details():    
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
-    data = os.popen("type admin_bank_DB.txt").read()
-    data1 = data.splitlines()
+
     if len(acc) <= 7:
         print("PLEASE ENTER CORRECT ACCOUNT NUMBER")
         print("-----------------------------------")
         detials()
+
+    data = os.popen("type admin_bank_DB.txt").read()
+    data1 = data.splitlines()
+
+    latest_acc = ""
+    latest_name = ""
+    latest_phone = ""
+    latest_balance = ""
+    latest_date = ""
+    
     for line in data1:
-        g = json.loads(line)
-        if int(acc) == g["account"]["ACC NO"]:
-            os.popen("type admin_bank_DB.txt").read()
-            print(f"\nACCOUNT HOLDER BALANCE    : {g['account']['BALANCE']}")
-            print(f"TIME OF TRANSACTIONS : {g['account']['DATE']}\n")
-    print("\n*-------------------------------------------------*")
-    print(f"|THIS IS YOURE BAN HISTORY {g['account']['NAME']}|")
-    print("*-------------------------------------------------*\n")
-    user()
+        if line != "":
+            g = json.loads(line)
+            if int(acc) == g["account"]["ACC NO"]:
+                latest_acc = g["account"]["ACC NO"]
+                latest_name = g["account"]["NAME"]
+                latest_phone = g["account"]["PHONENUMBER"]
+                latest_balance = g["account"]["BALANCE"]
+                latest_date = g["account"]["DATE"]
+
+    if latest_acc != "":
+        print("\n*-------------------------------------------------*")
+        print(f"| THIS IS YOUR BANK DETAILS {latest_name} |")
+        print("*-------------------------------------------------*\n")
+        print(f"ACCOUNT NUMBER      : {latest_acc}")
+        print(f"ACCOUNT HOLDER NAME : {latest_name}")
+        print(f"PHONE NUMBER        : {latest_phone}")
+        print(f"UPDATED BALANCE     : {latest_balance}₹")
+        print(f"LAST TRANSACTION    : {latest_date}")
+        print("---------------------------------------------------\n")
+
+        user()
+
+    print("ACCOUNT NOT FOUND")
+    details()
     
     print("ACCOUNT NOT FOUND")
     detials()
