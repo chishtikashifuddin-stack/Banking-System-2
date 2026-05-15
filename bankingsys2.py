@@ -111,21 +111,23 @@ def check():
         print("PLEASE ENTER CORRECT ACCOUNT NUMBER")
         print("-----------------------------------")
         check()
-        
+    
     data = os.popen("type admin_bank_DB.txt").read()
     data1 = data.splitlines()
     for line in data1:
         g = json.loads(line)
         if int(acc) == g["account"]["ACC NO"]:
-            g = json.loads(line)
-    print(f"\nACCOUNT NUMBER OF HOLDER   : {g['account']['ACC NO']}")
-    print(f"ACCOUNT HOLDER NAME        : {g['account']['NAME']}")
-    print(f"ACCOUNT HOLDER PHONENUMBER : {g['account']['PHONENUMBER']}")
-    print(f"ACCOUNT HOLDER BALANCE     : {g['account']['BALANCE']}\n")
+            os.popen("type admin_bank_DB.txt").read()
+            print(f"\nACCOUNT NUMBER OF HOLDER   : {g['account']['ACC NO']}")
+            print(f"ACCOUNT HOLDER NAME        : {g['account']['NAME']}")
+            print(f"ACCOUNT HOLDER PHONENUMBER : {g['account']['PHONENUMBER']}")
+            print(f"ACCOUNT HOLDER BALANCE     : {g['account']['BALANCE']}")
+            print(f"TIME OF TRANSACTIONS : {g['account']['DATE']}\n")
     admin()
-    else:
-        print("ACCOUNT NOT FOUND")
-        check()
+
+    print("ACCOUNT NOT FOUND")
+    check()
+
 
 def total():
     a = os.popen("type admin_bank_DB.txt").read()
