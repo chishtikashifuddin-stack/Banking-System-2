@@ -277,13 +277,13 @@ def deb():
             print(f"{amount}₹ DEBITED SUCCESSFULLY")
             print(f"NEW BALANCE : {total}₹")
             print("----------------------------------------")
-    data2 = json.dumps(acc)
-    os.popen(f'echo {data3} >> admin_bank_DB.txt')
-    os.popen(f'echo {data3} >> user_bank_DB.txt')
-    user()
+            data2 = json.dumps(acc)
+            os.popen(f'echo {data2} >> admin_bank_DB.txt')
+            os.popen(f'echo {data2} >> user_bank_DB.txt')
+            user()
 
     print("\nACCOUNT NOT FOUND\n")
-    
+    deb()
 def statements():    
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
     data = os.popen("type admin_bank_DB.txt").read()
