@@ -323,20 +323,24 @@ def deb():
     
 def statements():    
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
-    data = os.popen("type admin_bank_DB.txt").read()
+    data = os.popen("type user_history.txt").read()
     data1 = data.splitlines()
     if len(acc) <= 7:
         print("PLEASE ENTER CORRECT ACCOUNT NUMBER")
         print("-----------------------------------")
-        statements()
+        statments()
     for line in data1:
-        g = json.loads(line)
-        if int(acc) == g["account"]["ACC NO"]:
-            os.popen("type admin_bank_DB.txt").read()
-            print(f"\nACCOUNT HOLDER BALANCE    : {g['account']['BALANCE']}")
-            print(f"TIME OF TRANSACTIONS : {g['account']['DATE']}\n")
+        if acc in line:
+            line1,line2,line3,line4,line5,line6 = line.split(",")
+            name,num = line2.split(":")
+            bal,num2 = line4.split(":")
+            cre,num3 = line5.split(":")
+            date,num4,num5,num6 =line6.split(":")
+            
+            print(f"\nACCOUNT HOLDER BALANCE    : {num2} :{num3}")
+            print(f"TIME OF TRANSACTIONS : {num4}\n")
     print("\n*-------------------------------------------------*")
-    print(f"|THIS IS YOURE BAN HISTORY {g['account']['NAME']}|")
+    print(f"|THIS IS YOURE BANK HISTORY {num}|")
     print("*-------------------------------------------------*\n")
     user()
     
