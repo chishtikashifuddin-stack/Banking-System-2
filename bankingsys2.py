@@ -291,7 +291,7 @@ def statements():
     if len(acc) <= 7:
         print("PLEASE ENTER CORRECT ACCOUNT NUMBER")
         print("-----------------------------------")
-        detials()
+        statements()
     for line in data1:
         g = json.loads(line)
         if int(acc) == g["account"]["ACC NO"]:
@@ -347,8 +347,6 @@ def details():
         user()
         
     print("ACCOUNT NOT FOUND")
-    details()
-    
-    print("ACCOUNT NOT FOUND")
     detials()
+    
 fun()
