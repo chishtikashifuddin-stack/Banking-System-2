@@ -194,6 +194,8 @@ def user():
 
 # this function is use to credit account with using user account number to verify the user account then it will give 5 options to creadit amount.
 def credit():
+    data4 = []
+    C = "CREDIT"
     num = input("ENTER YOUR ACCOUNT NUMBER : ")
     data = os.popen("type admin_bank_DB.txt").read()
     data1 = data.splitlines()
@@ -213,6 +215,7 @@ def credit():
                     if num == str(g["account"]["ACC NO"]):
                         total = int(g["account"]["BALANCE"]) + int(num2)                
                         time = datetime.datetime.now()
+                        credit = "CREDIT"
                         acc = {
                             "account": {
                                 "ACC NO": g["account"]["ACC NO"],
@@ -224,20 +227,36 @@ def credit():
                         }
 
                 print("----------------------------------------")
-                print(f"HEY {g['account']['NAME']}")
                 print(f"{num2}₹ CREDITED SUCCESSFULLY")
                 print(f"NEW BALANCE : {total}₹")
                 print("----------------------------------------")
                 data2 = json.dumps(acc)
                 os.popen(f'echo {data2} >> user_bank_DB.txt')
                 os.popen(f"echo {data2} >> admin_bank_DB.txt")
+                
+                acc2 = {
+                            "account": {
+                                "ACC NO": g["account"]["ACC NO"],
+                                "NAME": g["account"]["NAME"],
+                                "PHONENUMBER": g["account"]["PHONENUMBER"],
+                                "BALANCE": total,
+                                "CREADIT" : C,
+                                "DATE": str(time)
+                            }
+                        }
+                        
+                data3 = json.dumps(acc2)
+                data4.append(data3)
+                os.popen(f"echo {data4} >> user_history.txt")
+                
                 user()
-
+                
             print("PLEASE ENTER CORRECT NUMBER\n")
             credit()
             
     print("ACCOUNT NOT FOUND")
     credit()
+
 # this function is use to debit account with using user account number to verify the user account then it will give 5 options to debit amount.
 def deb():
     num = input("ENTER YOUR ACCOUNT NUMBER : ")
@@ -255,9 +274,9 @@ def deb():
             balance = int(g["account"]["BALANCE"])
             
             if amount > balance:
-                print("\n----------------------------------------")
-                print("NOT ENOUGH BALANCE IN YOUR ACCOUNT")
-                print("----------------------------------------\n")
+                print("\n*------------------------------------------------------------*")
+                print("|NOT ENOUGH BALANCE IN YOUR ACCOUNT PLEASE CHECK YOURE BALANCE |")
+                print("*--------------------------------------------------------------*\n")
                 user()
 
             total = balance - amount
