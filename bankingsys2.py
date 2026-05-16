@@ -259,6 +259,8 @@ def credit():
 
 # this function is use to debit account with using user account number to verify the user account then it will give 5 options to debit amount.
 def deb():
+    data4 = []
+    D = "DEBIT"
     num = input("ENTER YOUR ACCOUNT NUMBER : ")
     data = os.popen("type admin_bank_DB.txt").read()
     lines = data.splitlines()
@@ -274,7 +276,7 @@ def deb():
             balance = int(g["account"]["BALANCE"])
             
             if amount > balance:
-                print("\n*------------------------------------------------------------*")
+                print("\n*--------------------------------------------------------------*")
                 print("|NOT ENOUGH BALANCE IN YOUR ACCOUNT PLEASE CHECK YOURE BALANCE |")
                 print("*--------------------------------------------------------------*\n")
                 user()
@@ -299,10 +301,26 @@ def deb():
             data2 = json.dumps(acc)
             os.popen(f'echo {data2} >> admin_bank_DB.txt')
             os.popen(f'echo {data2} >> user_bank_DB.txt')
+            
+            
+            acc2 = {
+                    "account": {
+                        "ACC NO": g["account"]["ACC NO"],
+                        "NAME": g["account"]["NAME"],
+                        "PHONENUMBER": g["account"]["PHONENUMBER"],
+                        "BALANCE": total,
+                        "CREADIT" : D,
+                        "DATE": str(time)
+                    }
+                }
+                
+            data3 = json.dumps(acc2)
+            data4.append(data3)
+            os.popen(f"echo {data4} >> user_history.txt")
             user()
 
     print("\nACCOUNT NOT FOUND\n")
-    deb()
+    
 def statements():    
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
     data = os.popen("type admin_bank_DB.txt").read()
