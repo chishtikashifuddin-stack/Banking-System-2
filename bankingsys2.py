@@ -60,6 +60,8 @@ def admin():
     admin()
     
 def cre():
+    data4 = []
+    R = "NO TRANSACTION"
     name = input("ENTER YOUR NAME : ")
     phone = input("ENTER YOUR PHONENUMBER : ")
     r = os.popen("type admin_bank_DB.txt").read()
@@ -102,6 +104,21 @@ def cre():
         os.popen(f'echo {data} >> admin_bank_DB.txt')
         print("YOUR ACCOUNT IS CREATED!")
         print("------------------------------\n")
+        
+        acc2 = {
+                    "account": {
+                        "ACC NO": acc,
+                        "NAME": name,
+                        "PHONENUMBER": a,
+                        "BALANCE": 0,
+                        "HISTORY" : R,
+                        "DATE": str(time)
+                    }
+                }
+                
+        data3 = json.dumps(acc2)
+        data4.append(data3)
+        os.popen(f"echo {data4} >> user_history.txt")
         admin()
     else:
         print("PLEASE ENTER CORRECT NUMBER!")
@@ -320,40 +337,47 @@ def deb():
             user()
 
     print("\nACCOUNT NOT FOUND\n")
+    user()
     
-def statements():    
+def statements():
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
     data = os.popen("type user_history.txt").read()
     data1 = data.splitlines()
+
     if len(acc) <= 7:
         print("PLEASE ENTER CORRECT ACCOUNT NUMBER")
         print("-----------------------------------")
-        statments()
+        statements()
+        
     for line in data1:
+        if acc not in line:
+            print("*---------------------------------------------------------------------------------------*")
+            print("|THIS ACCOUNT IS NOT HAVE ANY TRANSACTION HISTORY PLEASE CREDIT ACCOUNT IN YOURE ACCOUNT|")
+            print("*---------------------------------------------------------------------------------------*")
+            user()
         if acc in line:
-            line1,line2,line3,line4,line5,line6 = line.split(",")
-            name,num = line2.split(":")
-            bal,num2 = line4.split(":")
-            cre,num3 = line5.split(":")
-            date,num4,num5,num6 =line6.split(":")
-            
-            print(f"\nACCOUNT HOLDER BALANCE    : {num2} :{num3}")
-            print(f"TIME OF TRANSACTIONS : {num4}\n")
-    print("\n*-------------------------------------------------*")
-    print(f"|THIS IS YOURE BANK HISTORY {num}|")
-    print("*-------------------------------------------------*\n")
+            line1, line2, line3, line4, line5, line6 = line.split(",")
+            name, num = line2.split(":")
+            bal, num2 = line4.split(":")
+            cre, num3 = line5.split(":")
+            date, num4, num5, num6 = line6.split(":")
+            num7 = num6.replace("}", "")
+            num8 = num7.replace("]", "")
+            print(f"\nACCOUNT HOLDER BALANCE : {num2} : {num3}")
+            print(f"TIME OF TRANSACTIONS : {num4}:{num5}:{num8}\n")
+            print("\n*-------------------------------------------------*")
+            print(f"|THIS IS YOUR BANK HISTORY {num}|")
+            print("*-------------------------------------------------*\n")
+
     user()
     
-    print("ACCOUNT NOT FOUND")
-    statements()
-
 def details():    
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
 
     if len(acc) <= 7:
         print("PLEASE ENTER CORRECT ACCOUNT NUMBER")
         print("-----------------------------------")
-        detials()
+        details()
 
     data = os.popen("type admin_bank_DB.txt").read()
     data1 = data.splitlines()
@@ -388,6 +412,6 @@ def details():
         user()
         
     print("ACCOUNT NOT FOUND")
-    detials()
+    details()
     
 fun()
