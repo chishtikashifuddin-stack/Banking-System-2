@@ -183,48 +183,6 @@ pause
 
 ---
 
-# Project Screenshots
-
-## Home Screen
-
-<p align="center">
-  <img src="screenshots/home.png" width="800">
-</p>
-
----
-
-## Admin Panel
-
-<p align="center">
-  <img src="screenshots/admin-panel.png" width="800">
-</p>
-
----
-
-## Transaction System
-
-<p align="center">
-  <img src="screenshots/transaction.png" width="800">
-</p>
-
----
-
-## Transaction History
-
-<p align="center">
-  <img src="screenshots/history.png" width="800">
-</p>
-
----
-
-# Demo GIF
-
-<p align="center">
-  <img src="demo/versatile-bank-demo.gif" width="900">
-</p>
-
----
-
 # Sample Application Flow
 
 ```text
@@ -315,7 +273,7 @@ Steps to contribute:
 
 ## Kashifuddin Chishti
 
-Python Developer | CLI Application Developer
+Python Developer.
 
 ---
 
