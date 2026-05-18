@@ -240,7 +240,6 @@ pause
 This project helps in understanding:
 
 - Python Fundamentals
-- CLI Application Development
 - File Handling
 - JSON Manipulation
 - Transaction Logic
