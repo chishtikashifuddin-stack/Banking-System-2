@@ -268,7 +268,8 @@ def credit():
                                 "NAME": g["account"]["NAME"],
                                 "PHONENUMBER": g["account"]["PHONENUMBER"],
                                 "BALANCE": total,
-                                "CREADIT" : C,
+                                "RUPESS" : num2,
+                                "STATUS" : C,
                                 "DATE": str(time)
                             }
                         }
@@ -337,7 +338,8 @@ def deb():
                         "NAME": g["account"]["NAME"],
                         "PHONENUMBER": g["account"]["PHONENUMBER"],
                         "BALANCE": total,
-                        "CREADIT" : D,
+                        "RUPESS" : amount,
+                        "STATUS" : D,
                         "DATE": str(time)
                     }
                 }
@@ -363,17 +365,18 @@ def statements():
     
     for line in data1:        
         if acc in line:
-            line1, line2, line3, line4, line5, line6 = line.split(",")
+            line1, line2, line3, line4, line5, line6,line7 = line.split(",")
             name, num = line2.split(":")
             bal, num2 = line4.split(":")
             cre, num3 = line5.split(":")
-            date, num4, num5, num6 = line6.split(":")
+            amm,num9  = line6.split(":")
+            date, num4, num5, num6 = line7.split(":")
             num7 = num6.replace("}", "")
             num8 = num7.replace("]", "")
-            print(f"\nACCOUNT HOLDER BALANCE : {num2} : {num3}")
+            print(f"\nAMOUNT : {num3} : {num9}")
             print(f"TIME OF TRANSACTIONS : {num4}:{num5}:{num8}\n")
             print("\n*-------------------------------------------------*")
-    print(f"|THIS IS YOUR BANK HISTORY {num}|")
+    print(f"|THIS IS YOUR BANK HISTORY OF THIS ACCOUNT|")
     print("*-------------------------------------------------*\n")
     user()        
     
@@ -497,6 +500,7 @@ def transaction():
                             "NAME": g["account"]["NAME"],
                             "PHONENUMBER": g["account"]["PHONENUMBER"],
                             "BALANCE": total,
+                            "RUPESS" : num3, 
                             "DEBIT": D,
                             "DATE": str(time)
                         }
@@ -544,6 +548,7 @@ def transaction():
                             "NAME": g1["account"]["NAME"],
                             "PHONENUMBER": g1["account"]["PHONENUMBER"],
                             "BALANCE": total1,
+                            "RUPESS" : amount,
                             "CREDIT": C,
                             "DATE": str(time)
                         }
