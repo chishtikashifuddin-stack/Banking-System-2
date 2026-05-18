@@ -1,132 +1,340 @@
-# 🏦 Versatile Bank System (Python Project)
+# Versatile Bank System
 
-## 📌 Overview
+<p align="center">
+  A simple and versatile command-line banking system developed using Python.
+</p>
 
-Versatile Bank is a **command-line banking system** built using Python.
-It simulates real-world banking operations such as account creation, balance management, transactions, and history tracking.
-
-This project is designed to demonstrate **file handling, JSON usage, and core Python programming concepts**.
-
----
-
-## 🚀 Features
-
-### 👨‍💼 Admin Panel
-
-* Create new user accounts
-* Check account details
-* Transfer money between users
-
-### 👤 User Panel
-
-* Credit money
-* Debit money
-* Check account details
-* View transaction history
-* Transfer money to another user
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.x-blue?style=for-the-badge&logo=python" />
+  <img src="https://img.shields.io/badge/Platform-CLI-green?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Storage-JSON-orange?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" />
+</p>
 
 ---
 
-## 🛠️ Technologies Used
+# Overview
 
-* Python 🐍
-* JSON (for data storage)
-* File Handling
-* `pywhatkit` (for WhatsApp notifications)
-* `datetime`, `random`, `os`
+Versatile Bank System is a Python-based command-line banking application that simulates real-world banking operations such as:
+
+- Account Creation
+- Balance Management
+- Credit/Debit Operations
+- Fund Transfers
+- Transaction History Tracking
+
+The project is designed for learning Python fundamentals, file handling, and JSON-based data management.
 
 ---
 
-## 📂 Project Structure
+# Features
 
-```
-📁 Versatile-Bank
+## Admin Panel
+
+- Create User Accounts
+- View Account Details
+- Transfer Funds Between Users
+- Manage Banking Records
+
+---
+
+## User Panel
+
+- Credit Money
+- Debit Money
+- Transfer Funds
+- Check Account Balance
+- View Transaction History
+
+---
+
+# Technologies Used
+
+| Technology | Purpose |
+|------------|---------|
+| Python | Core Programming |
+| JSON | Data Storage |
+| File Handling | Record Management |
+| pywhatkit | WhatsApp Notifications |
+| datetime | Date & Time |
+| random | Random Account Generation |
+| os | System Operations |
+
+---
+
+# Project Structure
+
+```text
+Versatile-Bank/
 │
 ├── main.py
+├── requirements.txt
 ├── admin_bank_DB.txt
 ├── user_bank_DB.txt
 ├── user_history.txt
 ├── transfer_history.txt
+├── screenshots/
+│   ├── home.png
+│   ├── admin-panel.png
+│   ├── transaction.png
+│   └── history.png
+│
+├── demo/
+│   └── versatile-bank-demo.gif
+│
 └── README.md
 ```
 
 ---
 
-## ⚙️ How to Run
+# Installation
 
-1. Install Python (3.x)
-2. Install required library:
+## Automatic Installation
 
-   ```bash
-   pip install pywhatkit
-   ```
-3. Run the program:
+### Windows
 
-   ```bash
-   python main.py
-   ```
+Run:
 
----
+```bash id="5u9f1m"
+setup.bat
+```
 
-## 📸 Sample Flow
+### Linux / macOS
 
-1. Start program
-2. Choose:
+Run:
 
-   * `1` → Admin
-   * `2` → User
-3. Perform operations like:
-
-   * Create account
-   * Credit/Debit money
-   * Transfer funds
+```bash id="5l7pja"
+bash setup.sh
+```
 
 ---
 
-## ⚠️ Limitations
+# Manual Installation
 
-* Data is stored in **text files (not secure)**
-* No authentication system
-* Duplicate records may occur
-* Works only on local system
-* Uses `os.popen` (not recommended for production)
+## Step 1: Clone Repository
 
----
-
-## 🔐 Future Improvements
-
-* ✅ Add login system (PIN/password)
-* ✅ Use database (SQLite/MySQL)
-* ✅ Build GUI (Tkinter)
-* ✅ Convert to Web App (Flask/Django)
-* ✅ Improve security & validation
+```bash id="nq39pm"
+git clone https://github.com/your-username/Versatile-Bank.git
+```
 
 ---
 
-## 💡 Learning Outcomes
+## Step 2: Open Project Folder
 
-* File handling in Python
-* Working with JSON data
-* Building CLI-based applications
-* Managing program flow using functions
-
----
-
-## 👨‍💻 Author
-
-**Kashifuddin Chishti**
+```bash id="pn2y6t"
+cd Versatile-Bank
+```
 
 ---
 
-## ⭐ Support
+## Step 3: Install Dependencies
 
-If you like this project:
-
-* Star ⭐ the repository
-* Share with others
+```bash id="v1z03m"
+pip install -r requirements.txt
+```
 
 ---
 
-## 📜 License
+## Step 4: Run Application
+
+```bash id="g5y52z"
+python main.py
+```
+
+---
+
+# requirements.txt
+
+```txt
+pywhatkit
+```
+
+---
+
+# Installation Automation
+
+## setup.sh
+
+```bash
+#!/bin/bash
+
+echo "Installing Required Packages..."
+pip install -r requirements.txt
+
+echo "Starting Versatile Bank..."
+python main.py
+```
+
+---
+
+## setup.bat
+
+```bat
+@echo off
+
+echo Installing Required Packages...
+pip install -r requirements.txt
+
+echo Starting Versatile Bank...
+python main.py
+
+pause
+```
+
+---
+
+# Project Screenshots
+
+## Home Screen
+
+<p align="center">
+  <img src="screenshots/home.png" width="800">
+</p>
+
+---
+
+## Admin Panel
+
+<p align="center">
+  <img src="screenshots/admin-panel.png" width="800">
+</p>
+
+---
+
+## Transaction System
+
+<p align="center">
+  <img src="screenshots/transaction.png" width="800">
+</p>
+
+---
+
+## Transaction History
+
+<p align="center">
+  <img src="screenshots/history.png" width="800">
+</p>
+
+---
+
+# Demo GIF
+
+<p align="center">
+  <img src="demo/versatile-bank-demo.gif" width="900">
+</p>
+
+---
+
+# Sample Application Flow
+
+```text
+1. Start Application
+2. Select User Type
+   ├── Admin
+   └── User
+
+3. Perform Banking Operations
+   ├── Create Account
+   ├── Credit Money
+   ├── Debit Money
+   ├── Transfer Funds
+   └── View History
+```
+
+---
+
+# Data Storage Files
+
+| File Name | Description |
+|-----------|-------------|
+| admin_bank_DB.txt | Stores Admin Records |
+| user_bank_DB.txt | Stores User Accounts |
+| user_history.txt | Stores Transaction History |
+| transfer_history.txt | Stores Transfer Records |
+
+---
+
+# Limitations
+
+- No Authentication System
+- Plain Text Data Storage
+- Local Machine Only
+- No Database Integration
+- Not Production Ready
+
+---
+
+# Future Improvements
+
+- Secure Login System
+- SQLite/MySQL Integration
+- GUI with Tkinter
+- Flask/Django Web Version
+- OTP Verification
+- Enhanced Security
+- Account Statement Generation
+- Cloud Database Support
+
+---
+
+# Learning Outcomes
+
+This project helps in understanding:
+
+- Python Fundamentals
+- CLI Application Development
+- File Handling
+- JSON Manipulation
+- Transaction Logic
+- Program Flow Management
+
+---
+
+# Security Notice
+
+This project is developed for educational purposes only.
+
+Do not use it for real banking or financial systems.
+
+---
+
+# Contributing
+
+Contributions are welcome.
+
+Steps to contribute:
+
+1. Fork Repository
+2. Create New Branch
+3. Commit Changes
+4. Open Pull Request
+
+---
+
+# Author
+
+## Kashifuddin Chishti
+
+Python Developer | CLI Application Developer
+
+---
+
+# License
 
 This project is for educational purposes only.
+
+---
+
+# Support
+
+If you liked this project:
+
+- Star the Repository
+- Fork the Project
+- Share with Others
+
+---
+
+<p align="center">
+  Made with ❤️ using Python
+</p>
