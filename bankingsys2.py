@@ -3,11 +3,12 @@ import os
 import pywhatkit
 import datetime
 import json
+
 print("*------------------------------------------*")
 print("|        WELCOME TO VERSATILE BANK         |")
 print("*------------------------------------------*\n")
 
-
+# THIS FUNCTION IS USE AS A DASHBOARD
 def fun():
     print("*-------------------*")
     print("|     ADMIN (1)     |")
@@ -24,8 +25,8 @@ def fun():
 
     if a == "2":
         print("\n*-----------------------------------------*")
-        print("|    WELCOME USER TO VERSATILE BANK       |")
-        print("| HERE ARE THE OPTION WHAT YOU WANT TO DO |")
+        print("|    WELCOME TO VERSATILE BANK              |")
+        print("| HERE ARE THE OPTION WHAT YOU WANT TO DO   |")
         print("*-----------------------------------------*\n")
         user()
     else:
@@ -40,17 +41,31 @@ def admin():
     print("*---------------------------------------------------*")
     print("|         CLICK 1 FOR CREATE A ACCOUNT              |")
     print("|         CLICK 2 FOR CHECK ACCOUNT DETAILS         |")
-    print("|         CLICK 3 FOR EXIST                         |")
+    print("|         CLICK 3 FOR PAYMENT TRANSFER              |")
+    print("|         CLICK 4 FOR EXIST                         |")
     print("*---------------------------------------------------*")
     a = input("CHOICE OPTIONS :- ")
     if a == "1":
-        print("------------------------------\n")
+        print("*------------------------------*")
+        print("|WELCOME TO CREATE USER ACCOUNT |")
+        print("*------------------------------*\n")
         cre()
+        
     if a == "2":
-        print("------------------------------\n")
+        print("\n*-----------------------------------------------------*")
+        print("|    CHECK USER DETIALS WITH ACCOUNT NUMBER           |")
+        print("*-----------------------------------------------------*")
         check()
+        
     if a == "3":
-        print("*------------------------------------*")
+        print("\n*-----------------------------------------------------*")
+        print("|               WELCOME TO PAYEMENT TRANSACTION       |")
+        print("|               ENTER THE ACCOUNT NUMBERS             |")
+        print("*-----------------------------------------------------*")
+        transaction1()
+        
+    if a == "4":
+        print("\n*------------------------------------*")
         print("|    WELCOME BACK TO DASHBOARD       |")
         print("*------------------------------------*")
         fun()
@@ -59,9 +74,10 @@ def admin():
         print("PLEASE CHOICE FROM OPTIONS ")
     admin()
     
+# THIS FUNCTION IS USE FOR ADMIN, ADMIN CAN CREATE A BANK ACCOUNT OF USER    
 def cre():
-    data4 = []
-    R = "NO TRANSACTION"
+    data3 = []
+    r = "ZERO BALANCE"
     name = input("ENTER YOUR NAME : ")
     phone = input("ENTER YOUR PHONENUMBER : ")
     r = os.popen("type admin_bank_DB.txt").read()
@@ -79,8 +95,8 @@ def cre():
         print("-----------------------\n")
         cre()
     if name.isdigit():
-        print("---------------------------------------------------")
-        print("|PLEASE ENTER ALPHABET IN NAME DIGIT IS NOT ALLOW |")
+        print("----------------------------------------------------")
+        print("|PLEASE ENTER ALPHABET IN NAME DIGIT IS NOT ALLOWED |")
         print("---------------------------------------------------\n")
         cre()
         
@@ -90,6 +106,8 @@ def cre():
         time = str(datetime.datetime.now())
         msg = f"THANK YOU {name} YOUR ACCOUNT HAS BEEN CREATED SUCCESSFULLY IN VERSATILE BANK THIS IS YOUR ACCOUNT NUMBER : {acc}"
         pywhatkit.sendwhatmsg_instantly(a, msg)
+        
+        balance = 0
         
         acc = { "account" : {
             "ACC NO": acc,
@@ -105,20 +123,20 @@ def cre():
         print("YOUR ACCOUNT IS CREATED!")
         print("------------------------------\n")
         admin()
-    
+        
     else:
         print("PLEASE ENTER CORRECT NUMBER!")
         print("-----------------------------\n")
         cre()
 
-
+# THIS FUCTION IS USE FOR ADMIN, ADMIN CAN CHECK USER BANK DETIALS
 def check():    
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
 
     if len(acc) <= 7:
         print("PLEASE ENTER CORRECT ACCOUNT NUMBER")
         print("-----------------------------------")
-        detials()
+        check()
 
     data = os.popen("type admin_bank_DB.txt").read()
     data1 = data.splitlines()
@@ -153,14 +171,14 @@ def check():
         admin()
 
     print("ACCOUNT NOT FOUND")
-    check() 
+    check()
     
 # THIS OPTION IS USE FOR USERS
 def user():
     print("*-----------------------------------------------*")
     print("|         CLICK 1 FOR CREDIT MONEY              |")
     print("|         CLICK 2 FOR DEBIT MONEY               |")
-    print("|         CLICK 3 FOR CHECK BANK DETAILS        |")
+    print("|         CLICK 3 FOR CHECK BALANCE             |")
     print("|         CLICK 4 FOR CHECK PAYMENT STATEMENT   |")
     print("|         CLICK 5 FOR PAYMENT TRANSFER          |")
     print("|         CLICK 6 FOR EXIST                     |")
@@ -169,23 +187,23 @@ def user():
     a = input("ENTER THE CORRECT OPTION : ")
     if a == "1":
         print("*------------------------------------*")
-        print(" |    WELCOME TO CREDIT OPTION        |")
+        print("|    WELCOME TO CREDIT OPTION        |")
         print("*-------------------------------------*")
         credit()
     if a == "2":
         print("*------------------------------------*")
-        print(" |    WELCOME TO DEBIT OPTION         |")
+        print("|    WELCOME TO DEBIT OPTION         |")
         print("*-------------------------------------*")
         deb()
     if a == "3":
         print("*-----------------------------------------------------*")
-        print(" |    CHECK YOURE BANK DETAILS WITH ACCOUNT NUMBER    |")
+        print("|    CHECK YOURE DETIALS WITH ACCOUNT NUMBER          |")
         print("*-----------------------------------------------------*")
-        detials()
+        details()
     if a == "4":
-        print("*-----------------------------------------------------------------*")
-        print("|    CHECK YOURE BANK PAYMENT STATEMENT WITH ACCOUNT NUMBER       |")
-        print("*-----------------------------------------------------------------*")
+        print("*-----------------------------------------------------*")
+        print("|    CHECK YOURE BANK STATEMENT WITH ACCOUNT NUMBER  |")
+        print("*-----------------------------------------------------*")
         statements()
     if a == "5":
         print("*-----------------------------------------------------*")
@@ -193,16 +211,14 @@ def user():
         print("|               ENTER THE ACCOUNT NUMBERS             |")
         print("*-----------------------------------------------------*")
         transaction()
-        
     if a == "6":
-        print("-----------------------------------------------")
-        print("|         WELCOME BACK TO DASHBOARD           |")
-        print("-----------------------------------------------")
+        print("*-----------------------------------------------------*")
+        print("|               WELCOMEBACK TO DASHBOARD              |")
+        print("*-----------------------------------------------------*")
         fun()
-    
     else:
         print("PLEASE ENTER CORRECT OPTION")
-    user()
+        user()
 
 # this function is use to credit account with using user account number to verify the user account then it will give 5 options to creadit amount.
 def credit():
@@ -334,6 +350,7 @@ def deb():
     print("\nACCOUNT NOT FOUND\n")
     user()
     
+# this function is use show the user bank account statements 
 def statements():
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
     data = os.popen("type user_history.txt").read()
@@ -343,13 +360,8 @@ def statements():
         print("PLEASE ENTER CORRECT ACCOUNT NUMBER")
         print("-----------------------------------")
         statements()
-        
-    for line in data1:
-        if acc not in line:
-            print("*---------------------------------------------------------------------------------------*")
-            print("|THIS ACCOUNT IS NOT HAVE ANY TRANSACTION HISTORY PLEASE CREDIT ACCOUNT IN YOURE ACCOUNT|")
-            print("*---------------------------------------------------------------------------------------*")
-            user()
+    
+    for line in data1:        
         if acc in line:
             line1, line2, line3, line4, line5, line6 = line.split(",")
             name, num = line2.split(":")
@@ -361,14 +373,19 @@ def statements():
             print(f"\nACCOUNT HOLDER BALANCE : {num2} : {num3}")
             print(f"TIME OF TRANSACTIONS : {num4}:{num5}:{num8}\n")
             print("\n*-------------------------------------------------*")
-            print(f"|THIS IS YOUR BANK HISTORY {num}|")
-            print("*-------------------------------------------------*\n")
-
-    user()
+    print(f"|THIS IS YOUR BANK HISTORY {num}|")
+    print("*-------------------------------------------------*\n")
+    user()        
     
+    if acc not in line:
+        print("*---------------------------------------------------------------------------------------*")
+        print("|THIS ACCOUNT IS NOT HAVE ANY TRANSACTION HISTORY PLEASE CREDIT ACCOUNT IN YOURE ACCOUNT|")
+        print("*---------------------------------------------------------------------------------------*")
+        user()
+        
+# THIS FUNCTION IS FOR USER CAN CHECK THERE BANK DETIALS     
 def details():    
     acc = input("ENTER YOUR ACCOUNT NUMBER : ")
-
     if len(acc) <= 7:
         print("PLEASE ENTER CORRECT ACCOUNT NUMBER")
         print("-----------------------------------")
@@ -384,8 +401,8 @@ def details():
     latest_date = ""
     
     for line in data1:
+        g = json.loads(line)
         if line != "":
-            g = json.loads(line)
             if int(acc) == g["account"]["ACC NO"]:
                 latest_acc = g["account"]["ACC NO"]
                 latest_name = g["account"]["NAME"]
@@ -409,6 +426,7 @@ def details():
     print("ACCOUNT NOT FOUND")
     details()
     
+# THIS FUNCTION IS USE TO USER CAN TRANSFER MONEY FOR ANOTHER USER
 def transaction():
     data4 = []
     data5 = []
@@ -419,6 +437,7 @@ def transaction():
     data1 = data.splitlines()
     for line in reversed(data1):
         g = json.loads(line)
+        
 # SENDER ACCOUNT FOUND
         if num == str(g["account"]["ACC NO"]):
             print("\n*------------------------------------*")
@@ -426,7 +445,7 @@ def transaction():
             print("*------------------------------------*\n")
             num2 = input("ENTER ACCOUNT NUMBER OF RECEIVER : ")
             
-# FIND RECEIVER
+# FIND RECEIVER FOUND
             for line2 in reversed(data1):
                 g1 = json.loads(line2)
                 if num2 == str(g1["account"]["ACC NO"]):
@@ -447,7 +466,6 @@ def transaction():
 
                     total = balance - int(num3)
                     total1 = int(g1["account"]["BALANCE"]) + int(num3)
-
                     time = datetime.datetime.now()
                   
 # SENDER SIDE DATA
@@ -466,19 +484,9 @@ def transaction():
                     print(f"NEW BALANCE : {total}₹")
                     print("----------------------------------------")
 
-                    msg = (
-                        f"HEY {g1['account']['NAME']} YOU RECEIVED A PAYMENT OF "
-                        f"{num3}₹ IN YOUR VERSATILE BANK ACCOUNT, "
-                        f"FROM {g['account']['NAME']} AND YOUR TOTAL BALANCE IS {total1}"
-                    )
-
-                    pywhatkit.sendwhatmsg_instantly(
-                        g1["account"]["PHONENUMBER"],
-                        msg
-                    )
-
+                    msg = ( f"HEY {g1['account']['NAME']} YOU RECEIVED A PAYMENT OF {num3}₹ IN YOUR VERSATILE BANK ACCOUNT, FROM {g['account']['NAME']} AND YOUR TOTAL BALANCE IS {total1}")
+                    pywhatkit.sendwhatmsg_instantly(g1["account"]["PHONENUMBER"],msg )
                     data2 = json.dumps(acc)
-
                     os.popen(f'echo {data2} >> user_bank_DB.txt')
                     os.popen(f'echo {data2} >> admin_bank_DB.txt')
 
@@ -543,7 +551,7 @@ def transaction():
                     
                     data8 = json.dumps(acc5)
                     data5.append(data8)
-                    os.popen(f'echo {data8} >> user_history.txt')
+                    os.popen(f'echo {data5} >> user_history.txt')
                     
                     acc6 = {
                         "account": {
@@ -563,10 +571,159 @@ def transaction():
                     
                     
             print("PLEASE ENTER CORRECT RECEIVER ACCOUNT NUMBER\n")
-            transaction()
-            user()
+            continue
 
     print("ACCOUNT NOT FOUND")
     transaction()
+    
+#THIS FUNCTION IS USE FOR ADMIN CAN TRANSFER MONEY TO USER TO USER   
+def transaction1():
+    data4 = []
+    data5 = []
+    C = "CREDIT"
+    D = "DEBIT"
+    num = input("ENTER YOUR ACCOUNT NUMBER : ")
+    data = os.popen("type admin_bank_DB.txt").read()
+    data1 = data.splitlines()
+    for line in reversed(data1):
+        g = json.loads(line)
+        
+# SENDER ACCOUNT FOUND
+        if num == str(g["account"]["ACC NO"]):
+            print("\n*------------------------------------*")
+            print(f"{g['account']['NAME']} THIS USER FOUND")
+            print("*------------------------------------*\n")
+            num2 = input("ENTER ACCOUNT NUMBER OF RECEIVER : ")
+            
+# FIND RECEIVER FOUND
+            for line2 in reversed(data1):
+                g1 = json.loads(line2)
+                if num2 == str(g1["account"]["ACC NO"]):
+                    
+                    print("\n*---------------------------------------*")
+                    print(f"|{g1['account']['NAME']} THIS RECEIVER FOUND|")
+                    print("*-----------------------------------------*\n")
+                    
+                    num3 = input(f"ENTER HOW MUCH MONEY YOU WANT SENT TO {g1['account']['NAME']} : ")
+
+                    balance = int(g["account"]["BALANCE"])
+
+                    if int(num3) > balance:
+                        print("\n*--------------------------------------------------------------*")
+                        print("|    NOT ENOUGH BALANCE IN THE ACCOUNT PLEASE CHECK THE BALANCE  |")
+                        print("*--------------------------------------------------------------*\n")
+                        admin()
+                        
+                    total = balance - int(num3)
+                    total1 = int(g1["account"]["BALANCE"]) + int(num3)
+                    time = datetime.datetime.now()
+                  
+# SENDER SIDE DATA
+                    acc = {
+                        "account": {
+                            "ACC NO": g["account"]["ACC NO"],
+                            "NAME": g["account"]["NAME"],
+                            "PHONENUMBER": g["account"]["PHONENUMBER"],
+                            "BALANCE": total,
+                            "DATE": str(time)
+                        }
+                    }
+
+                    print("----------------------------------------")
+                    print(f"{num3}₹ MONEY TRANSFER SUCCESSFULLY")
+                    print(f"NEW BALANCE OF SENDER : {total}₹")
+                    print("----------------------------------------")
+
+                    msg = ( f"HEY {g1['account']['NAME']} YOU RECEIVED A PAYMENT OF {num3}₹ IN YOUR VERSATILE BANK ACCOUNT, FROM {g['account']['NAME']} AND YOUR TOTAL BALANCE IS {total1}")
+                    pywhatkit.sendwhatmsg_instantly(g1["account"]["PHONENUMBER"],msg )
+                    data2 = json.dumps(acc)
+                    os.popen(f'echo {data2} >> user_bank_DB.txt')
+                    os.popen(f'echo {data2} >> admin_bank_DB.txt')
+
+# SENDER HISTORY
+                    acc2 = {
+                        "account": {
+                            "ACC NO": g["account"]["ACC NO"],
+                            "NAME": g["account"]["NAME"],
+                            "PHONENUMBER": g["account"]["PHONENUMBER"],
+                            "BALANCE": total,
+                            "DEBIT": D,
+                            "DATE": str(time)
+                        }
+                    }
+                    
+                    data3 = json.dumps(acc2)
+                    data4.append(data3)
+                    os.popen(f'echo {data3} >> user_history.txt')
+                    
+                    acc3 = {
+                        "account": {
+                            "ACC NO": g["account"]["ACC NO"],
+                            "NAME": g["account"]["NAME"],
+                            "PHONENUMBER": g["account"]["PHONENUMBER"],
+                            "BALANCE": total,
+                            "DEBIT": D,
+                            "MONEY TRANSFER": num2,
+                            "TRANSFER TO": g1["account"]["NAME"],
+                            "DATE": str(time)
+                        }
+                    }
+                    data6 = json.dumps(acc3)
+                    os.popen(f'echo {data6} >> transfer_history.txt')
+                    
+# RECEIVER SIDE DATA
+
+                    acc4 = {
+                        "account": {
+                            "ACC NO": g1["account"]["ACC NO"],
+                            "NAME": g1["account"]["NAME"],
+                            "PHONENUMBER": g1["account"]["PHONENUMBER"],
+                            "BALANCE": total1,
+                            "DATE": str(time)
+                        }
+                    }
+
+                    data7 = json.dumps(acc4)
+
+                    os.popen(f'echo {data7} >> user_bank_DB.txt')
+                    os.popen(f'echo {data7} >> admin_bank_DB.txt')
+
+                    acc5 = {
+                        "account": {
+                            "ACC NO": g1["account"]["ACC NO"],
+                            "NAME": g1["account"]["NAME"],
+                            "PHONENUMBER": g1["account"]["PHONENUMBER"],
+                            "BALANCE": total1,
+                            "CREDIT": C,
+                            "DATE": str(time)
+                        }
+                    }
+                    
+                    data8 = json.dumps(acc5)
+                    data5.append(data8)
+                    os.popen(f'echo {data5} >> user_history.txt')
+                    
+                    acc6 = {
+                        "account": {
+                            "ACC NO": g1["account"]["ACC NO"],
+                            "NAME": g1["account"]["NAME"],
+                            "PHONENUMBER": g1["account"]["PHONENUMBER"],
+                            "BALANCE": total1,
+                            "CREDIT": C,
+                            "MONEY TRANSFER": num,
+                            "TRANSFER FROM": g["account"]["NAME"],
+                            "DATE": str(time)
+                        }
+                    }
+                    data9 = json.dumps(acc6)
+                    os.popen(f'echo {data9} >> transfer_history.txt')
+                    admin()
+                    
+                    
+            print("PLEASE ENTER CORRECT RECEIVER ACCOUNT NUMBER\n")
+            continue
+        
+    print("ACCOUNT NOT FOUND")
+    transaction1()
     
 fun()
